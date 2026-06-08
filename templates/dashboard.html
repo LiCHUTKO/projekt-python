@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard · Analiza inflacji{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <p class="eyebrow">Oficjalne dane publiczne GUS</p>
+    <h1>Inflacja w Polsce w latach 2015–2025</h1>
+    <p>
+        Analiza przedstawia średnioroczne zmiany cen towarów i usług konsumpcyjnych.
+        Wskaźnik 103,6 oznacza, że ceny były średnio o 3,6% wyższe niż rok wcześniej.
+    </p>
+</section>
+
+<section class="stats-grid" aria-label="Najważniejsze wartości">
+    <article class="stat-card">
+        <span>Najnowszy wynik</span>
+        <strong>{{ "%.1f"|format(latest.inflacja_proc) }}%</strong>
+        <small>{{ latest.rok|int }} rok</small>
+    </article>
+    <article class="stat-card">
+        <span>Najwyższa inflacja</span>
+        <strong>{{ "%.1f"|format(highest.inflacja_proc) }}%</strong>
+        <small>{{ highest.rok|int }} rok</small>
+    </article>
+    <article class="stat-card">
+        <span>Skumulowana zmiana cen</span>
+        <strong>{{ "%.1f"|format(cumulative_change) }}%</strong>
+        <small>od 2014 do 2025 roku</small>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="section-heading">
+        <h2>Wykresy</h2>
+        <p>Trzy sposoby prezentacji tej samej oficjalnej serii danych.</p>
+    </div>
+
+    <div class="charts-grid">
+        {% for chart in charts %}
+            <article class="chart-card">
+                <img src="data:image/png;base64,{{ chart }}" alt="Wykres analizy inflacji numer {{ loop.index }}">
+            </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="two-columns">
+    <article class="panel">
+        <h2>Najważniejsze wnioski</h2>
+        <ul class="conclusions">
+            <li>Największy średnioroczny wzrost cen wystąpił w 2022 roku i wyniósł 14,4%.</li>
+            <li>W latach 2015–2016 odnotowano niewielki spadek średniego poziomu cen.</li>
+            <li>Po bardzo wysokich wynikach z lat 2022–2023 inflacja spadła do 3,6% w 2024 i 2025 roku.</li>
+            <li>Łączny poziom cen wzrósł od 2014 do 2025 roku o około {{ "%.1f"|format(cumulative_change) }}%.</li>
+        </ul>
+    </article>
+
+    <article class="panel">
+        <h2>Komentarz do danych</h2>
+        <p>
+            Spadek tempa inflacji nie oznacza spadku cen. Oznacza jedynie, że ceny rosną wolniej.
+            Widać to na wykresie skumulowanym: po silnym wzroście w latach 2022–2023 poziom cen
+            nadal rośnie, mimo niższej inflacji w kolejnych latach.
+        </p>
+        <p class="source">
+            Źródło:
+            <a href="https://stat.gov.pl/obszary-tematyczne/ceny-handel/wskazniki-cen/wskazniki-cen-towarow-i-uslug-konsumpcyjnych-pot-inflacja-/roczne-wskazniki-cen-towarow-i-uslug-konsumpcyjnych" target="_blank" rel="noreferrer">
+                Główny Urząd Statystyczny
+            </a>
+        </p>
+    </article>
+</section>
+
+<section class="panel">
+    <div class="section-heading">
+        <h2>Tabela danych</h2>
+        <p>Podstawa wskaźnika: rok poprzedni = 100.</p>
+    </div>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rok</th>
+                    <th>Wskaźnik cen</th>
+                    <th>Inflacja</th>
+                    <th>Poziom cen (2014 = 100)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row.rok|int }}</td>
+                        <td>{{ "%.1f"|format(row.wskaznik_cen) }}</td>
+                        <td>{{ "%.1f"|format(row.inflacja_proc) }}%</td>
+                        <td>{{ "%.1f"|format(row.poziom_cen) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

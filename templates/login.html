@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Logowanie · Analiza inflacji{% endblock %}
+
+{% block content %}
+<section class="login-wrapper">
+    <div class="login-card">
+        <p class="eyebrow">Projekt analizy danych</p>
+        <h1>Zaloguj się</h1>
+        <p class="muted">
+            Dashboard z analizą oficjalnych danych GUS jest dostępny po zalogowaniu.
+        </p>
+
+        <form method="post" class="login-form">
+            <label for="username">Login</label>
+            <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+
+            <label for="password">Hasło</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+            <button class="button button-primary" type="submit">Zaloguj</button>
+        </form>
+
+        <div class="demo-data">
+            <strong>Dane demonstracyjne</strong>
+            <span>Login: admin · Hasło: admin123</span>
+        </div>
+    </div>
+</section>
+{% endblock %}
