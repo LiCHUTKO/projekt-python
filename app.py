@@ -25,7 +25,13 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 BASE_DIR = Path(__file__).resolve().parent
 DATABASE_PATH = BASE_DIR / "users.db"
-DATA_PATH = BASE_DIR / "data" / "inflacja_gus.csv"
+DATA_PATH = (
+    BASE_DIR
+    / "data"
+    / "rocznewskaznikicentowarowiuslugkonsumpcyjnychod1950roku_2.csv"
+)
+ANALYSIS_START_YEAR = 2015
+ANALYSIS_END_YEAR = 2025
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get(
@@ -90,7 +96,30 @@ def load_user(user_id):
 
 
 def load_inflation_data():
-    data = pd.read_csv(DATA_PATH)
+    source = pd.read_csv(DATA_PATH, sep=";", decimal=",", encoding="cp1250")
+    required_columns = {"Rok", "Wartość"}
+
+    if not required_columns.issubset(source.columns):
+        raise ValueError("Plik GUS nie zawiera kolumn 'Rok' i 'Wartość'.")
+
+    data = (
+        source.loc[
+            source["Rok"].between(ANALYSIS_START_YEAR, ANALYSIS_END_YEAR),
+            ["Rok", "Wartość"],
+        ]
+        .rename(columns={"Rok": "rok", "Wartość": "wskaznik_cen"})
+        .sort_values("rok")
+        .reset_index(drop=True)
+    )
+
+    expected_years = list(range(ANALYSIS_START_YEAR, ANALYSIS_END_YEAR + 1))
+    if data["rok"].tolist() != expected_years:
+        raise ValueError(
+            f"Plik GUS musi zawierać po jednym wierszu dla lat "
+            f"{ANALYSIS_START_YEAR}-{ANALYSIS_END_YEAR}."
+        )
+
+    data["inflacja_proc"] = data["wskaznik_cen"] - 100
     data["poziom_cen"] = (data["wskaznik_cen"] / 100).cumprod() * 100
     return data
 
