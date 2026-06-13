@@ -94,6 +94,9 @@ od 1950 do 2025 roku. Źródłem danych jest Główny Urząd Statystyczny:
 Projekt nie zawiera drugiego, ręcznie skróconego pliku z tymi samymi danymi.
 Dzięki temu istnieje jedno źródło prawdy.
 
+Szczegółowe informacje o formacie pliku, kolumnach i sposobie interpretacji
+wskaźnika znajdują się w [ZRODLO_DANYCH.md](ZRODLO_DANYCH.md).
+
 ## Jak rozumieć wskaźnik
 
 GUS podaje wartości przy podstawie `rok poprzedni = 100`.
@@ -136,6 +139,7 @@ Wejście na `/dashboard` bez logowania przekierowuje do formularza logowania.
 
 ```text
 projekt_python/
+|-- README.md
 |-- app.py
 |-- requirements.txt
 |-- URUCHOM.bat
@@ -145,7 +149,9 @@ projekt_python/
 |-- docs/
 |   |-- README.md
 |   |-- DOKUMENTACJA.md
-|   `-- projekt.pdf
+|   |-- ZRODLO_DANYCH.md
+|   |-- projekt.pdf
+|   `-- screenshots/
 |-- static/
 |   `-- style.css
 `-- templates/
@@ -156,10 +162,11 @@ projekt_python/
 
 ## Do czego służy każdy plik
 
+- `README.md` (root) - skrócony opis i szybki start dla GitHuba.
 - `app.py` - uruchamia Flask, bazę, logowanie, analizę i wykresy.
 - `requirements.txt` - wymienia cztery wymagane biblioteki.
 - `URUCHOM.bat` - automatyzuje przygotowanie i start na Windows.
-- `.gitignore` - pomija środowisko, bazę i pliki tymczasowe Pythona.
+- `.gitignore` - pomija środowisko, bazę, pliki tymczasowe i IDE.
 - plik CSV - jest jedynym źródłem danych statystycznych.
 - `templates/base.html` - wspólny układ stron.
 - `templates/login.html` - formularz logowania.
@@ -167,7 +174,9 @@ projekt_python/
 - `static/style.css` - wygląd i responsywność strony.
 - `docs/README.md` - instrukcja uruchomienia i szybki opis.
 - `docs/DOKUMENTACJA.md` - pełne opracowanie zgodne z wymaganiami.
+- `docs/ZRODLO_DANYCH.md` - opis źródła, formatu i metadanych pliku CSV.
 - `docs/projekt.pdf` - treść zadania przekazana przez prowadzącego.
+- `docs/screenshots/` - katalog na zrzuty ekranu aplikacji.
 
 ## Biblioteki
 

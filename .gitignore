@@ -1,6 +1,30 @@
+# Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
 .venv/
 venv/
+env/
+
+# Database (generated at runtime)
 users.db
+
+# Environment variables
 .env
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS
+desktop.ini

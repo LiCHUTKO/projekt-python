@@ -309,6 +309,7 @@ dokumentacji [3]. Flask-Login dokumentuje `login_user`, `logout_user` i
 
 ```text
 projekt_python/
+|-- README.md
 |-- app.py
 |-- requirements.txt
 |-- URUCHOM.bat
@@ -318,7 +319,9 @@ projekt_python/
 |-- docs/
 |   |-- README.md
 |   |-- DOKUMENTACJA.md
-|   `-- projekt.pdf
+|   |-- ZRODLO_DANYCH.md
+|   |-- projekt.pdf
+|   `-- screenshots/
 |-- static/
 |   `-- style.css
 `-- templates/
@@ -328,7 +331,8 @@ projekt_python/
 ```
 
 W projekcie nie ma zbędnego skróconego CSV, zapisanych wykresów ani bazy
-użytkowników w repozytorium.
+użytkowników w repozytorium. Plik `ZRODLO_DANYCH.md` opisuje format
+i metadane pliku CSV.
 
 ## 13. Instrukcja prezentacji projektu
 
