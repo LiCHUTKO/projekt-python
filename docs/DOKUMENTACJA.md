@@ -124,6 +124,17 @@ Proces logowania użytkownika przebiega według następującego algorytmu:
 6.  W przypadku zgodności haseł następuje wywołanie funkcji `login_user()`, która zapisuje identyfikator użytkownika w sesji przeglądarki (zaszyfrowane ciasteczko sesyjne podpisywane kluczem `SECRET_KEY`). Użytkownik zostaje przekierowany na stronę `/dashboard`.
 7.  W przypadku braku użytkownika lub niezgodności haseł generowany jest komunikat błędu (mechanizm `flash` we Flasku), a użytkownik pozostaje na stronie logowania.
 
+#### 5.2.5. Przebieg procesu rejestracji (Registration Flow)
+Proces tworzenia nowego konta użytkownika przebiega według następującego algorytmu:
+1.  Użytkownik wysyła żądanie `POST` z formularza rejestracji, przesyłając nową nazwę użytkownika (`username`), hasło (`password`) oraz potwierdzenie hasła (`confirm_password`).
+2.  Aplikacja weryfikuje poprawność danych (czy pola nie są puste oraz czy hasła są identyczne). W przypadku błędu walidacji generowany jest odpowiedni komunikat flash, a formularz jest ponownie renderowany.
+3.  Połączenie z bazą danych zostaje otwarte, po czym wykonywane jest zapytanie SQL w celu sprawdzenia, czy wybrana nazwa użytkownika jest już zajęta.
+4.  Jeśli nazwa użytkownika istnieje w bazie danych, proces zostaje przerwany, a użytkownik otrzymuje komunikat o błędzie.
+5.  Jeśli nazwa użytkownika jest wolna, hasło zostaje zaszyfrowane funkcją `generate_password_hash()`.
+6.  Zaszyfrowany hasz wraz z nazwą użytkownika są zapisywane w bazie danych poprzez zapytanie SQL:
+    `INSERT INTO users (username, password_hash) VALUES (?, ?)`
+7.  Zmiany są zatwierdzane poleceniem `commit()`, po czym następuje przekierowanie do formularza logowania z komunikatem o sukcesie.
+
 ---
 
 ## 6. Analiza kodu źródłowego pliku app.py (Wyjaśnienie krok po kroku)
@@ -214,7 +225,12 @@ Obsługuje adres główny `/` aplikacji dla dwóch metod HTTP:
 *   `GET`: jeśli użytkownik jest już zalogowany (`current_user.is_authenticated`), zostaje automatycznie przekierowany na dashboard. W przeciwnym razie renderowany jest szablon formularza logowania (`login.html`).
 *   `POST`: wywoływana, gdy użytkownik prześle formularz logowania. Dane są pobierane za pomocą `request.form.get`. Następuje proces walidacji w bazie danych SQLite (zgodnie z algorytmem opisanym w sekcji 5.2.4). W przypadku błędu, funkcja `flash` przekazuje komunikat do szablonu, a strona logowania jest przeładowywana.
 
-### 6.12. Funkcja widoku dashboardu dashboard (Linie 218–234)
+### 6.12. Funkcja widoku rejestracji register
+Obsługuje ścieżkę `/register` aplikacji dla dwóch metod HTTP:
+*   `GET`: jeśli użytkownik jest już zalogowany, następuje przekierowanie do dashboardu. W przeciwnym razie renderowany jest szablon formularza rejestracji (`register.html`).
+*   `POST`: pobiera przysłaną nazwę użytkownika, hasło oraz potwierdzenie hasła. Waliduje, czy pola nie są puste, czy wpisane hasła są zgodne oraz czy nazwa użytkownika nie jest zajęta w bazie SQLite. W przypadku powodzenia hasło jest haszowane przy użyciu `generate_password_hash()`, a nowy rekord zostaje dodany do tabeli `users`.
+
+### 6.13. Funkcja widoku dashboardu dashboard (Linie 218–234)
 Obsługuje adres `/dashboard`. Jest zabezpieczona dekoratorem `@login_required` — próba otwarcia tej strony przez niezalogowaną osobę spowoduje automatyczne przekierowanie do formularza logowania.
 Działanie funkcji:
 1.  Wczytanie danych z CSV przy użyciu `load_inflation_data()`.
@@ -224,10 +240,10 @@ Działanie funkcji:
 5.  Obliczenie skumulowanej zmiany cen (wartość z ostatniego roku pomniejszona o 100%).
 6.  Przekazanie wszystkich wyliczonych zmiennych oraz wykresów do szablonu HTML `dashboard.html` za pomocą funkcji `render_template`.
 
-### 6.13. Funkcja wylogowania logout (Linie 237–242)
+### 6.14. Funkcja wylogowania logout (Linie 237–242)
 Obsługuje żądania typu `POST` na adres `/logout`. Dekorator `@login_required` zapobiega wywołaniu tej metody przez osoby trzecie. Funkcja wywołuje `logout_user()`, co usuwa sesję użytkownika z ciasteczek przeglądarki, po czym następuje przekierowanie na stronę logowania. Zastosowanie metody `POST` zamiast prostego linku `GET` chroni przed przypadkowym wylogowaniem użytkownika przez roboty sieciowe lub mechanizmy wstępnego pobierania stron w przeglądarkach.
 
-### 6.14. Sekcja uruchomieniowa (Linie 245–250)
+### 6.15. Sekcja uruchomieniowa (Linie 245–250)
 Wywoływana jest funkcja `init_db()` w celu przygotowania bazy danych. Instrukcja warunkowa `if __name__ == "__main__"` sprawdza, czy plik został uruchomiony bezpośrednio (np. poprzez `python app.py`). Jeśli tak, następuje start wbudowanego serwera deweloperskiego Flask. Flaga `debug` jest ustawiana na podstawie zmiennej środowiskowej `FLASK_DEBUG`, co pozwala na elastyczne sterowanie trybem diagnostycznym w środowisku uruchomieniowym.
 
 ---

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Rejestracja · Analiza inflacji{% endblock %}
+
+{% block content %}
+<section class="login-wrapper">
+    <div class="login-card">
+        <p class="eyebrow">Projekt analizy danych</p>
+        <h1>Zarejestruj się</h1>
+        <p class="muted">
+            Utwórz nowe konto użytkownika, aby uzyskać dostęp do dashboardu.
+        </p>
+
+        <form method="post" class="login-form">
+            <label for="username">Nazwa użytkownika</label>
+            <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+
+            <label for="password">Hasło</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" required>
+
+            <label for="confirm_password">Potwierdź hasło</label>
+            <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" required>
+
+            <button class="button button-primary" type="submit">Zarejestruj</button>
+        </form>
+
+        <div class="register-link">
+            Masz już konto? <a href="{{ url_for('login') }}">Zaloguj się</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

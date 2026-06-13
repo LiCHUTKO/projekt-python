@@ -96,16 +96,25 @@ W celu potwierdzenia, że aplikacja spełnia wszystkie wymagania funkcjonalne i 
 1.  **Test braku autoryzacji (Zabezpieczenie zasobów)**:
     *   Spróbuj wejść bezpośrednio na adres http://127.0.0.1:5000/dashboard przy użyciu czystej przeglądarki (lub w trybie prywatnym).
     *   *Oczekiwany rezultat*: Aplikacja odmawia dostępu, wyświetla komunikat o konieczności zalogowania i przekierowuje użytkownika na stronę logowania http://127.0.0.1:5000/.
-2.  **Test błędnego uwierzytelniania**:
-    *   W formularzu logowania wprowadź niepoprawny login (np. `admin_test`) lub błędne hasło (np. `błędne_hasło`).
+2.  **Test rejestracji nowego użytkownika**:
+    *   Na stronie logowania kliknij link "Zarejestruj się" lub przejdź bezpośrednio pod adres http://127.0.0.1:5000/register.
+    *   Wpisz nową unikalną nazwę użytkownika (np. `jan_kowalski`), hasło (np. `haslo123`) oraz potwierdzenie hasła (np. `haslo123`). Kliknij przycisk "Zarejestruj".
+    *   *Oczekiwany rezultat*: Konto zostaje pomyślnie utworzone, serwer przekierowuje na stronę logowania z zielonym komunikatem: "Konto zostało utworzone pomyślnie. Możesz się teraz zalogować."
+3.  **Test walidacji rejestracji (Błędy rejestracji)**:
+    *   Spróbuj ponownie przejść na stronę rejestracji i założyć konto z tą samą nazwą użytkownika `jan_kowalski`.
+    *   *Oczekiwany rezultat*: Serwer odrzuca wniosek, na ekranie pojawia się komunikat o błędzie: "Użytkownik o takiej nazwie już istnieje."
+    *   Spróbuj zarejestrować nowego użytkownika, podając różne hasła w polach "Hasło" i "Potwierdź hasło".
+    *   *Oczekiwany rezultat*: Serwer odrzuca wniosek, na ekranie pojawia się komunikat o błędzie: "Hasła muszą być identyczne."
+4.  **Test logowania na nowo utworzone konto**:
+    *   Na stronie logowania wprowadź dane nowego konta (login: `jan_kowalski`, hasło: `haslo123`).
+    *   *Oczekiwany rezultat*: Logowanie przebiega pomyślnie, serwer kieruje na adres http://127.0.0.1:5000/dashboard, a w nagłówku pojawia się napis: "Zalogowano: jan_kowalski".
+5.  **Test błędnego uwierzytelniania**:
+    *   Wyloguj się, a następnie w formularzu logowania wprowadź niepoprawny login (np. `admin_test`) lub błędne hasło (np. `błędne_hasło`).
     *   *Oczekiwany rezultat*: Serwer odrzuca żądanie, nie następuje logowanie, na stronie pojawia się czerwony komunikat błędu "Nieprawidłowy login lub hasło."
-3.  **Test poprawnego logowania**:
-    *   Wprowadź login `admin` oraz hasło `admin123` (lub inne hasło zdefiniowane w zmiennej środowiskowej).
-    *   *Oczekiwany rezultat*: Aplikacja pomyślnie uwierzytelnia użytkownika, tworzy sesję i przekierowuje go na adres http://127.0.0.1:5000/dashboard.
-4.  **Weryfikacja poprawności obliczeń i wizualizacji**:
+6.  **Weryfikacja poprawności obliczeń i wizualizacji**:
     *   Na załadowanym dashboardzie sprawdź wyświetlane statystyki.
     *   *Oczekiwany rezultat*: Najwyższa inflacja musi wynosić `14.4%` dla roku `2022`, najnowszy wynik za rok `2025` musi wynosić `3.6%`, skumulowana zmiana cen od 2014 do 2025 roku musi wynosić w przybliżeniu `55.2%`. Na stronie muszą renderować się trzy wykresy wygenerowane z matplotlib oraz tabela zawierająca dane od 2015 do 2025 roku.
-5.  **Test wylogowania**:
+7.  **Test wylogowania**:
     *   Kliknij przycisk "Wyloguj" w prawym górnym rogu nagłówka.
     *   *Oczekiwany rezultat*: Sesja zostaje usunięta, aplikacja wyświetla komunikat "Wylogowano poprawnie.", następuje przekierowanie na stronę logowania, a ponowna próba wejścia na adres `/dashboard` jest blokowana.
 

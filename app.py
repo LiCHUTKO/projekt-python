@@ -215,6 +215,48 @@ def login():
     return render_template("login.html")
 
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        username = request.form.get("username", "").strip()
+        password = request.form.get("password", "")
+        confirm_password = request.form.get("confirm_password", "")
+
+        if not username or not password:
+            flash("Nazwa użytkownika i hasło są wymagane.", "error")
+            return render_template("register.html")
+
+        if password != confirm_password:
+            flash("Hasła muszą być identyczne.", "error")
+            return render_template("register.html")
+
+        try:
+            with closing(get_connection()) as connection:
+                existing_user = connection.execute(
+                    "SELECT id FROM users WHERE username = ?", (username,)
+                ).fetchone()
+
+                if existing_user:
+                    flash("Użytkownik o takiej nazwie już istnieje.", "error")
+                    return render_template("register.html")
+
+                connection.execute(
+                    "INSERT INTO users (username, password_hash) VALUES (?, ?)",
+                    (username, generate_password_hash(password)),
+                )
+                connection.commit()
+
+            flash("Konto zostało utworzone pomyślnie. Możesz się teraz zalogować.", "success")
+            return redirect(url_for("login"))
+        except sqlite3.Error as e:
+            flash(f"Błąd bazy danych: {e}", "error")
+
+    return render_template("register.html")
+
+
 @app.route("/dashboard")
 @login_required
 def dashboard():

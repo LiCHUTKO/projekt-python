@@ -18,6 +18,7 @@ Aplikacja webowa zrealizowana w języku Python z wykorzystaniem mikro-frameworka
 ## 1. Charakterystyka funkcjonalna
 
 Aplikacja realizuje następujące funkcjonalności:
+*   Rejestracja nowych kont użytkowników z walidacją danych i zapisem w bazie danych SQLite.
 *   Autoryzacja użytkowników w oparciu o sesje oraz lokalną bazę danych SQLite.
 *   Zabezpieczenie przed nieautoryzowanym dostępem do panelu analitycznego (dashboardu).
 *   Odczyt i weryfikacja poprawności danych z pliku CSV w formacie udostępnianym przez Główny Urząd Statystyczny.
@@ -110,6 +111,7 @@ projekt_python/
 └── templates/              # Szablony HTML renderowane przez silnik Jinja2
     ├── base.html           # Szablon bazowy zawierający wspólne elementy układu (header, footer)
     ├── login.html          # Szablon formularza logowania
+    ├── register.html       # Szablon formularza rejestracji nowego użytkownika
     └── dashboard.html      # Szablon panelu analitycznego wyświetlającego wyniki
 ```
 
