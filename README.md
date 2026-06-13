@@ -139,11 +139,14 @@ Aplikacja przechowuje dane kont użytkowników w pliku bazy danych SQLite o nazw
 
 ---
 
-## 9. Autor projektu
+## 9. Skład zespołu i autorzy
 
-Projekt został wykonany samodzielnie jako praca zaliczeniowa z przedmiotu Języki Obiektowe I (Python).
+Projekt został wykonany jako praca zaliczeniowa w zespole trzyosobowym z przedmiotu Języki Obiektowe I (Python).
 
-**Autor**: Jakub Liszewski  
+*   **Jakub Liszewski** (nr indeksu: 193216, GitHub: [LiCHUTKO](https://github.com/LiCHUTKO)) — odpowiedzialny za pozyskanie danych z GUS oraz analizę i wizualizację danych (pandas, matplotlib).
+*   **Wiktor Musiał** (nr indeksu: 194167, GitHub: [spry02](https://github.com/spry02)) — odpowiedzialny za warstwę logiki aplikacji webowej oraz bazę danych SQLite (Flask, SQLite, Werkzeug).
+*   **Filip Kotyński** (nr indeksu: 193444, GitHub: [kolynski](https://github.com/kolynski)) — odpowiedzialny za warstwę prezentacyjną (UI/UX, szablony HTML/CSS, testy i dokumentację).
+
 **Uczelnia**: WSB w Chorzowie  
 **Prowadzący**: mgr inż. Arkadiusz Banasik  
 **Rok akademicki**: 2021/2022 (semestr letni)

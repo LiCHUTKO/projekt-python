@@ -2,19 +2,23 @@
 
 ## 1. Skład zespołu oraz role w projekcie
 
-Projekt został zrealizowany w formie jednoosobowej przez następującego autora:
+Projekt został zrealizowany w formie zespołowej przez następujących autorów:
 
-*   **Jakub Liszewski**: odpowiedzialny za pełny cykl życia oprogramowania, w tym:
+*   **Jakub Liszewski** (nr indeksu: 193216, GitHub: [LiCHUTKO](https://github.com/LiCHUTKO)): odpowiedzialny za część analityczną, w tym:
     *   pozyskanie i weryfikację poprawności danych statystycznych z Głównego Urzędu Statystycznego (GUS),
+    *   przygotowanie skryptów analitycznych (biblioteka pandas) oraz modułu wizualizacji danych (biblioteka matplotlib).
+
+*   **Wiktor Musiał** (nr indeksu: 194167, GitHub: [spry02](https://github.com/spry02)): odpowiedzialny za architekturę logiczną i backend, w tym:
     *   zaprojektowanie i implementację warstwy backendowej w języku Python z wykorzystaniem mikro-frameworka Flask,
     *   zaprojektowanie i implementację mechanizmów bezpieczeństwa oraz sesji użytkownika (Flask-Login, Werkzeug),
-    *   zaprojektowanie bazy danych SQLite oraz wdrożenie mechanizmów mapowania i haszowania haseł,
-    *   przygotowanie skryptów analitycznych (biblioteka pandas) oraz modułu wizualizacji danych (biblioteka matplotlib),
+    *   zaprojektowanie bazy danych SQLite oraz wdrożenie mechanizmów mapowania i haszowania haseł.
+
+*   **Filip Kotyński** (nr indeksu: 193444, GitHub: [kolynski](https://github.com/kolynski)): odpowiedzialny za warstwę prezentacyjną, w tym:
     *   przygotowanie szablonów interfejsu użytkownika (HTML, Jinja2, CSS),
     *   przeprowadzenie testów funkcjonalnych systemu,
     *   stworzenie dokumentacji projektowej i technicznej.
 
-Zgodnie z wymaganiami określonymi w dokumencie projektowym, dopuszczalny maksymalny skład sekcji wynosi trzy osoby. Samodzielna realizacja projektu w pełni spełnia kryteria formalne, zapewniając autorowi pełną kontrolę nad spójnością architektoniczną rozwiązania.
+Zgodnie z wymaganiami określonymi w dokumencie projektowym, skład sekcji w pełni spełnia kryteria formalne (maksymalnie 3 osoby w zespole). Podział ról pozwolił na sprawną realizację poszczególnych komponentów projektu.
 
 ---
 
@@ -253,7 +257,7 @@ Poniższa tabela przedstawia mapowanie wymagań określonych przez prowadzącego
 
 | Wymaganie z projekt.pdf | Sposób realizacji w projekcie | Status |
 |---|---|---|
-| 1. Skład zespołu oraz role | Określono w sekcji 1 niniejszej dokumentacji (projekt jednoosobowy, Jakub Liszewski). | Spełniono |
+| 1. Skład zespołu oraz role | Określono w sekcji 1 niniejszej dokumentacji (zespół trzyosobowy: Jakub Liszewski, Wiktor Musiał, Filip Kotyński). | Spełniono |
 | 2. Opis tematyki projektu | Opisano w sekcji 2 (Analiza inflacji w Polsce w ujęciu rocznym). | Spełniono |
 | 3. Cel realizacji projektu | Zdefiniowano w sekcji 3 (Aplikacja analityczno-webowa z bezpiecznym dostępem). | Spełniono |
 | 4. Opis realizacji i sposobu osiągnięcia celu | Wyjaśniono szczegółowo w sekcji 4 (Podział na etapy: analityczny, bazodanowy, prezentacyjny). | Spełniono |
